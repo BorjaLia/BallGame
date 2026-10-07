@@ -5,6 +5,8 @@ public static class Bootstrapper
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     static void Initialize()
     {
-        ServiceLocator sl;
+        Debug.Log("Initialized bootstrapper");
+
+        ServiceLocator sl = ServiceLocator.Get();
     }
 }

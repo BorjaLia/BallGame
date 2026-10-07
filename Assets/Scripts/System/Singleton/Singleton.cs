@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Singleton<T> where T : class, new()
@@ -17,5 +18,10 @@ public class Singleton<T> where T : class, new()
             }
             return _instance; 
         }
+    }
+
+    public static T Get()
+    {
+        return Instance;
     }
 }

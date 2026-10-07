@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ServiceLocator
+public class ServiceLocator : Singleton<ServiceLocator>
 {
     private Dictionary<Type, object> _services = new Dictionary<Type, object>();
     private readonly Dictionary<Type, GameObject> _gameObjectHandles = new Dictionary<Type, GameObject>();
