@@ -3,8 +3,8 @@ using UnityEngine;
 public static class Bootstrapper
 {
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-    static void BoostrapperStartup()
+    static void Initialize()
     {
-
+        ServiceLocator sl;
     }
 }
