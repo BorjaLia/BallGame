@@ -24,4 +24,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "LoggerPlugin"
 include(":app")
- 
+include(":Logger")
