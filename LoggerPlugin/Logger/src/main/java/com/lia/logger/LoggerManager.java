@@ -3,13 +3,9 @@ package com.lia.logger;
 import android.util.Log;
 
 public class LoggerManager {
-    private static LoggerManager instance = null;
+    private static final LoggerManager instance =  new LoggerManager();
     public static LoggerManager Get()
     {
-        if (instance != null) return instance;
-
-        instance = new LoggerManager();
-
         return instance;
     }
 
@@ -19,6 +15,6 @@ public class LoggerManager {
     }
     public void SendLog(String message)
     {
-        Log.i("LOG:",message);
+        Log.i("myLOG:",message);
     }
 }

@@ -4,17 +4,27 @@ public class LoggerTest : MonoBehaviour
 {
 #if UNITY_ANDROID
 
+    static int calls = 0;
+
     public AndroidJavaObject loggerManager;
 
     void Start()
     {
-        using var cls = new AndroidJavaClass("com.lia.logger.LoggerManager");
-        loggerManager = cls.CallStatic<AndroidJavaClass>("Get");
+        Debug.Log("Start LoggerManager");
 
-        loggerManager.Call("SendLog","Hola desde unity");
+        using var cls = new AndroidJavaClass("com.lia.logger.LoggerManager");
+        loggerManager = cls.CallStatic<AndroidJavaObject>("Get");
+    }
+
+    public void CallPlugin()
+    {
+        calls++;
+
+        loggerManager.Call("SendLog", "Hola desde unity");
 
         long t = loggerManager.Call<long>("GetTime");
         Debug.Log($"Hora: {t}");
+        Debug.Log($"Call: {calls}");
     }
 
     void Update()
