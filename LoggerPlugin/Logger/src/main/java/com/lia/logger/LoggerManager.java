@@ -9,7 +9,7 @@ public class LoggerManager {
         if (instance != null) return instance;
 
         instance = new LoggerManager();
-    
+
         return instance;
     }
 
