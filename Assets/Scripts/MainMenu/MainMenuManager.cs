@@ -1,6 +1,7 @@
-using System.Data.SqlTypes;
+using System.Collections;
 using UnityEngine;
-using UnityEngine.Playables;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainMenuManager : MonoBehaviour
 {
@@ -12,6 +13,10 @@ public class MainMenuManager : MonoBehaviour
     public GameObject creditsPanel;
     public GameObject playPanel;
     public GameObject logsPanel;
+
+    [Header("Loading Screen")]
+    public GameObject loadingPanel;
+    public Slider progressBar;
 
     private void Start()
     {
@@ -34,4 +39,32 @@ public class MainMenuManager : MonoBehaviour
     public void GoToCredits() => MenuStateMachine.ChangeState(new CreditsState(this));
     public void GoToPlay() => MenuStateMachine.ChangeState(new PlayState(this));
     public void GoToPlugin() => MenuStateMachine.ChangeState(new PluginState(this));
+
+    public void LoadLevel(int levelIndex)
+    {
+        MenuStateMachine.ChangeState(new LoadingState(this));
+
+        StartCoroutine(LoadSceneAsync(levelIndex));
+    }
+
+    private IEnumerator LoadSceneAsync(int levelIndex)
+    {
+        Application.backgroundLoadingPriority = ThreadPriority.BelowNormal;
+
+        AsyncOperation operation = SceneManager.LoadSceneAsync(levelIndex);
+
+        //operation.allowSceneActivation = false; 
+
+        while (!operation.isDone)
+        {
+            float progress = Mathf.Clamp01(operation.progress / 0.9f);
+
+            if (progressBar != null)
+            {
+                progressBar.value = progress;
+            }
+
+            yield return null;
+        }
+    }
 }

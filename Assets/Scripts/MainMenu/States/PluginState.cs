@@ -7,11 +7,11 @@ public class PluginState : MenuState
     public override void Enter()
     {
         Debug.Log("Entering Play");
-        controller.playPanel.SetActive(true);
+        controller.logsPanel.SetActive(true);
     }
 
     public override void Exit()
     {
-        controller.playPanel.SetActive(false);
+        controller.logsPanel.SetActive(false);
     }
 }
