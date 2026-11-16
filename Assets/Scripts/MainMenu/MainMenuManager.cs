@@ -11,6 +11,7 @@ public class MainMenuManager : MonoBehaviour
     public GameObject storePanel;
     public GameObject creditsPanel;
     public GameObject playPanel;
+    public GameObject logsPanel;
 
     private void Start()
     {
@@ -18,6 +19,7 @@ public class MainMenuManager : MonoBehaviour
         storePanel.SetActive(false);
         creditsPanel.SetActive(false);
         playPanel.SetActive(false);
+        logsPanel.SetActive(false);
 
         MenuStateMachine.ChangeState(new MainMenuState(this));
     }
@@ -31,4 +33,5 @@ public class MainMenuManager : MonoBehaviour
     public void GoToStore() => MenuStateMachine.ChangeState(new StoreState(this));
     public void GoToCredits() => MenuStateMachine.ChangeState(new CreditsState(this));
     public void GoToPlay() => MenuStateMachine.ChangeState(new PlayState(this));
+    public void GoToPlugin() => MenuStateMachine.ChangeState(new PluginState(this));
 }
