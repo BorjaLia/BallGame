@@ -9,9 +9,9 @@ public class ServiceLocator : Singleton<ServiceLocator>
 
     public void Register<T>(T service) where T : class
     {
-        if (typeof(T).IsAssignableFrom(typeof(MonoBehaviour)))
+        if (typeof(T).IsAssignableFrom(typeof(MonoBehaviour)) || service is MonoBehaviour)
         {
-            Debug.LogError("Use RegisterAsMonobehaviour<T>() to register MonoBehaviours!");
+            Debug.LogWarning("Use RegisterAsMonobehaviour<T>() to register MonoBehaviours!");
         }
 
         if (service == null)
@@ -26,6 +26,9 @@ public class ServiceLocator : Singleton<ServiceLocator>
         {
             Debug.LogError($"could not add {typeof(T).Name} as a service");
         }
+
+
+        Debug.Log(type.Name + " has been registered as service");
     }
 
     public void RegisterAsMonobehaviour<T>() where T : MonoBehaviour
@@ -47,6 +50,7 @@ public class ServiceLocator : Singleton<ServiceLocator>
         _services.Add(type, service);
         _gameObjectHandles.Add(type, gameObjectHandle);
 
+        Debug.Log(type.Name + " has been registered as monobehaviour");
         return;
     }
 
@@ -77,7 +81,6 @@ public class ServiceLocator : Singleton<ServiceLocator>
 
         Debug.LogError("Could not get service " + typeof(T).Name);
         return null;
-
     }
 
     public bool Clear()

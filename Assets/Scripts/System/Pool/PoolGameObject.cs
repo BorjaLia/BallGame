@@ -1,15 +1,23 @@
 using UnityEngine;
-
-public class GameObjectPool<T> : MonoBehaviour where T : Component, IPoolObject
+public class ComponentPool<T> where T : Component, IPoolObject
 {
     private readonly Pool<T> pool;
+    private readonly Transform containerTransform;
 
-    public GameObjectPool(T prefab, int initialSize)
+    public ComponentPool(T prefab, int initialSize, Transform rootParent = null)
     {
+        GameObject containerGo = new GameObject($"Pool_{prefab.name}");
+        containerTransform = containerGo.transform;
+
+        if (rootParent != null)
+        {
+            containerTransform.SetParent(rootParent);
+        }
+
         pool = new Pool<T>(
             createObject: () =>
             {
-                T obj = Object.Instantiate(prefab, transform.parent);
+                T obj = Object.Instantiate(prefab, containerTransform);
                 obj.gameObject.SetActive(false);
                 return obj;
             },
