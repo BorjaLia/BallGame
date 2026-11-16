@@ -63,7 +63,6 @@ public class MainMenuManager : MonoBehaviour
             {
                 progressBar.value = progress;
             }
-
             yield return null;
         }
     }

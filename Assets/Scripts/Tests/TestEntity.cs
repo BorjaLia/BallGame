@@ -3,7 +3,7 @@ using UnityEngine;
 public class TestEntity : MonoBehaviour, IPoolObject
 {
     [SerializeField]
-    private MeshRenderer renderer;
+    private MeshRenderer meshRenderer;
 
     public float timeLimit = 3.0f;
 
@@ -12,7 +12,7 @@ public class TestEntity : MonoBehaviour, IPoolObject
 
     void Start()
     {
-        renderer = GetComponent<MeshRenderer>();
+        meshRenderer = GetComponent<MeshRenderer>();
     }
 
     void Update()
@@ -22,7 +22,7 @@ public class TestEntity : MonoBehaviour, IPoolObject
         if (accumulatedTime > timeLimit)
         {
             Debug.Log("I AM YELLOW");
-            renderer.material.color = Color.yellow;
+            meshRenderer.material.color = Color.yellow;
             changed = true;
         }
     }
@@ -31,14 +31,14 @@ public class TestEntity : MonoBehaviour, IPoolObject
     {
         accumulatedTime = 0.0f;
         changed = false;
-        renderer.material.color = Color.white;
+        meshRenderer.material.color = Color.white;
         Debug.Log("Entity has spawned!");
     }
     public void OnDespawn()
     {
         accumulatedTime = 0.0f;
         changed = false;
-        renderer.material.color = Color.red;
+        meshRenderer.material.color = Color.red;
         Debug.Log("Entity has despawned!");
     }
 }
