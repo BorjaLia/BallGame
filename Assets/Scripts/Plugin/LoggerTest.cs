@@ -7,7 +7,8 @@ public class LoggerTest : MonoBehaviour
     [Header("UI Elements")]
     public TextMeshProUGUI logDisplayUI;
 
-#if UNITY_ANDROID
+#if UNITY_ANDROID && !UNITY_EDITOR
+
     private AndroidJavaObject loggerManager;
     private ConcurrentQueue<string> logQueue = new ConcurrentQueue<string>();
 

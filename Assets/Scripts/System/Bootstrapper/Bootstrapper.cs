@@ -8,5 +8,7 @@ public static class Bootstrapper
         Debug.Log("Initialized bootstrapper");
 
         ServiceLocator sl = ServiceLocator.Get();
+
+        sl.RegisterAsMonobehaviour<EventBus>();
     }
 }
