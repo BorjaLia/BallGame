@@ -1345,6 +1345,18 @@ PrefabInstance:
       propertyPath: showText
       value: 
       objectReference: {fileID: 552406766}
+    - target: {fileID: 1506998401517832495, guid: a9a51ff7debe03948b564654dc5bf0a7, type: 3}
+      propertyPath: gyroControlReference
+      value: 
+      objectReference: {fileID: 2230956641199325533, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+    - target: {fileID: 1506998401517832495, guid: a9a51ff7debe03948b564654dc5bf0a7, type: 3}
+      propertyPath: joystickControlReference
+      value: 
+      objectReference: {fileID: 2651616628117844689, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+    - target: {fileID: 1506998401517832495, guid: a9a51ff7debe03948b564654dc5bf0a7, type: 3}
+      propertyPath: keyboardControlReference
+      value: 
+      objectReference: {fileID: 6011315919649081107, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
     - target: {fileID: 3524453080142367559, guid: a9a51ff7debe03948b564654dc5bf0a7, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

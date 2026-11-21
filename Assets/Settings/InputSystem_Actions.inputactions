@@ -88,10 +88,28 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Roll",
+                    "name": "GyroRoll",
                     "type": "Value",
                     "id": "5f6a6bcf-88c3-4d29-9b1b-3bf74650b5b2",
                     "expectedControlType": "Vector3",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "KeyboardRoll",
+                    "type": "Value",
+                    "id": "9f1e65f6-9dee-43a4-a338-9e6971357d40",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "JoystickRoll",
+                    "type": "Value",
+                    "id": "d65261fd-f116-4f9b-b008-d0b1f0468dc2",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -490,7 +508,73 @@
                     "interactions": "",
                     "processors": "",
                     "groups": ";Touch;Gamepad;Keyboard&Mouse",
-                    "action": "Roll",
+                    "action": "GyroRoll",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "2D Vector",
+                    "id": "109b490e-b5f0-4dd7-8552-cebc634aeb9a",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "KeyboardRoll",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "588520ce-64c6-42ef-8ec1-a023320da905",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "KeyboardRoll",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "bbb705cb-31d4-4abd-b582-c5037b525f34",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "KeyboardRoll",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "43ac67fb-fd3e-4fdb-9d50-9fb5cdc52c82",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "KeyboardRoll",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "195a6f67-6178-4ea2-a2e7-a0f1bfc0e84e",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "KeyboardRoll",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "8eec4313-a3ab-47f1-a048-d42b9a73f176",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "JoystickRoll",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

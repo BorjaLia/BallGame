@@ -5,11 +5,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private PlayerMovement movementScript;
     [SerializeField]
-    private PlayerInput inputScript;
+    private PlayerInputHandler inputScript;
 
 
     public PlayerMovement MovementScript { get { return movementScript; } private set { } }
-    public PlayerInput InputScript { get { return inputScript; } private set { } }
+    public PlayerInputHandler InputScript { get { return inputScript; } private set { } }
 
     void Start()
     {
@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
 
         if (!inputScript)
         {
-            inputScript = GetComponent<PlayerInput>();
+            inputScript = GetComponent<PlayerInputHandler>();
         }
         if (!inputScript)
         {
