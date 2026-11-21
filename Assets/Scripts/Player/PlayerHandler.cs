@@ -1,14 +1,14 @@
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerHandler : MonoBehaviour
 {
     [SerializeField]
-    private PlayerMovement movementScript;
+    private PlayerMovementHandler movementScript;
     [SerializeField]
     private PlayerInputHandler inputScript;
 
 
-    public PlayerMovement MovementScript { get { return movementScript; } private set { } }
+    public PlayerMovementHandler MovementScript { get { return movementScript; } private set { } }
     public PlayerInputHandler InputScript { get { return inputScript; } private set { } }
 
     void Start()
@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
     {
         if (!movementScript)
         {
-            movementScript = GetComponent<PlayerMovement>();
+            movementScript = GetComponent<PlayerMovementHandler>();
         }
         if (!movementScript)
         {
