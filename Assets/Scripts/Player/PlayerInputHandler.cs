@@ -83,7 +83,6 @@ public class PlayerInputHandler : MonoBehaviour
         {
             InputSystem.EnableDevice(UnityEngine.InputSystem.Gyroscope.current);
             isGyroEnabled = true;
-            isGyroEnabledDebug = isGyroEnabled;
             Debug.Log("Gyro activated");
         }
         else
@@ -111,7 +110,6 @@ public class PlayerInputHandler : MonoBehaviour
         {
             InputSystem.DisableDevice(UnityEngine.InputSystem.Gyroscope.current);
             isGyroEnabled = false;
-            isGyroEnabledDebug = isGyroEnabled;
             Debug.Log("Gyro deactivated");
         }
         else
