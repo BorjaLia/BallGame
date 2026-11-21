@@ -13,7 +13,8 @@ public class PlayerInputHandler : MonoBehaviour
 
     [Header("Settings")]
     [SerializeField] private ControlType currentControlType = ControlType.Keyboard;
-    [SerializeField] private bool isGyroEnabledDebug = false;
+    [SerializeField] private float resetGyroTime = 1.75f;
+    [SerializeField] private float currentResetTime = 0.0f;
 
     [Header("Input Action References")]
     [SerializeField] private InputActionReference gyroControlReference;
@@ -23,6 +24,7 @@ public class PlayerInputHandler : MonoBehaviour
     [Header("UI References")]
     [SerializeField] private GameObject onScreenJoystickUI;
     [SerializeField] private TMP_Text showText;
+    
 
     private bool isGyroEnabled = false;
     public bool IsGyroEnabled => isGyroEnabled;
@@ -31,12 +33,12 @@ public class PlayerInputHandler : MonoBehaviour
 
     public Vector2 MoveInput { get; private set; }
 
-    private Vector3 inputDir;
-    private Vector3 inputDirDelta;
+    private Vector3 gyroDir;
+    private Vector3 gyroDirDelta;
 
     void Start()
     {
-        isGyroEnabledDebug = isGyroEnabled;
+        MoveInput = Vector3.zero;
     }
 
     private void OnEnable()
@@ -202,6 +204,23 @@ public class PlayerInputHandler : MonoBehaviour
         MoveInput = Vector2.zero;
     }
 
+
+    void CheckGyro()
+    {
+        if(gyroDirDelta != Vector3.zero)
+        {
+            currentResetTime = 0.0f;
+            return;
+        }
+
+        currentResetTime += Time.deltaTime;
+
+        if (currentResetTime <= resetGyroTime)
+        {
+            gyroDir = Vector3.zero;
+        }
+    }
+
     void Update()
     {
         string debugString = $"Mode: {currentControlType}\n";
@@ -210,19 +229,17 @@ public class PlayerInputHandler : MonoBehaviour
         {
             case ControlType.Gyroscope:
                 {
+                    CheckGyro();
 
 #if UNITY_ANDROID && !UNITY_EDITOR
 
-                    inputDirDelta = gyroControlReference.action.ReadValue<Vector3>();
-                    inputDir += inputDirDelta * Time.deltaTime;
+                    gyroDirDelta = gyroControlReference.action.ReadValue<Vector3>();
+                    gyroDir += new Vector3(gyroDirDelta.y,-gyroDirDelta.x,0.0f) * Time.deltaTime;
 
-                    inputDirDelta = gyroControlReference.action.ReadValue<Vector3>();
-                    inputDir += inputDirDelta * Time.deltaTime;
-
-                    MoveInput = inputDir;
+                    MoveInput = gyroDir;
 #endif
 
-                    debugString += $"Gyro Delta: {inputDirDelta}\nGyro Total: {inputDir}\n";
+                    debugString += $"Gyro Delta: {gyroDirDelta}\nGyro Total: {gyroDir}\n";
                     break;
                 }
 
@@ -247,9 +264,10 @@ public class PlayerInputHandler : MonoBehaviour
                 }
         }
 
-        debugString += $"Move output: {MoveInput}";
+        if (MoveInput != Vector2.zero) debugString += $"Move output: {MoveInput}";
 
         showText.text = debugString;
         Debug.Log(debugString);
+
     }
 }
