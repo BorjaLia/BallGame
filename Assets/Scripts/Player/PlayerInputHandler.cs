@@ -89,9 +89,9 @@ public class PlayerInputHandler : MonoBehaviour
             Debug.LogError("Gyro device not found!");
         }
 
-        if (rollControlReference != null)
+        if (gyroControlReference != null)
         {
-            rollControlReference.action.Enable();
+            gyroControlReference.action.Enable();
         }
         else
         {
@@ -117,9 +117,9 @@ public class PlayerInputHandler : MonoBehaviour
             Debug.LogError("Gyro device not found!");
         }
 
-        if (rollControlReference != null)
+        if (gyroControlReference != null)
         {
-            rollControlReference.action.Disable();
+            gyroControlReference.action.Disable();
         }
         else
         {
