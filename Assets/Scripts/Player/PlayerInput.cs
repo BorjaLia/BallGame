@@ -5,6 +5,12 @@ using UnityEngine.InputSystem;
 
 public class PlayerInput : MonoBehaviour
 {
+    public enum ControlType
+    {
+        Gyroscope,
+        ActionReference
+    }
+
     [SerializeField]
     private bool isGyroEnabledDebug = false;
 
@@ -18,24 +24,63 @@ public class PlayerInput : MonoBehaviour
     [SerializeField]
     private InputActionReference rollControlReference;
 
-    private Vector2 inputDir;
 
+
+    private Vector3 inputDir;
+    private Vector3 inputDirDelta;
     
     public void ActivateGyro()
     {
 #if UNITY_ANDROID && !UNITY_EDITOR
-        InputSystem.EnableDevice(UnityEngine.InputSystem.Gyroscope.current);
-        isGyroEnabled = true;
-        isGyroEnabledDebug = isGyroEnabled;
+
+        if (UnityEngine.InputSystem.Gyroscope.current != null)
+        {
+            InputSystem.EnableDevice(UnityEngine.InputSystem.Gyroscope.current);
+            isGyroEnabled = true;
+            isGyroEnabledDebug = isGyroEnabled;
+            Debug.Log("Gyro activated");
+        }
+        else
+        {
+            Debug.LogError("Gyro device not found!");
+        }
+
+        if (rollControlReference != null)
+        {
+            rollControlReference.action.Enable();
+        }
+        else
+        {
+            Debug.LogError("Action reference not set!");
+        }
+
 #endif
     }
 
     public void DeactivateGyro()
     {
 #if UNITY_ANDROID && !UNITY_EDITOR
-        InputSystem.DisableDevice(UnityEngine.InputSystem.Gyroscope.current);
-        isGyroEnabled = false;
-        isGyroEnabledDebug = isGyroEnabled;
+
+        if (UnityEngine.InputSystem.Gyroscope.current != null)
+        {
+            InputSystem.DisableDevice(UnityEngine.InputSystem.Gyroscope.current);
+            isGyroEnabled = false;
+            isGyroEnabledDebug = isGyroEnabled;
+            Debug.Log("Gyro deactivated");
+        }
+        else
+        {
+            Debug.LogError("Gyro device not found!");
+        }
+
+        if (rollControlReference != null)
+        {
+            rollControlReference.action.Disable();
+        }
+        else
+        {
+            Debug.LogError("Action reference not set!");
+        }
 #endif
     }
 
@@ -56,20 +101,18 @@ public class PlayerInput : MonoBehaviour
 
     void Update()
     {
-        string testString = "";
 
 #if UNITY_ANDROID && !UNITY_EDITOR
-        Vector3 gyroDir = UnityEngine.InputSystem.Gyroscope.current.angularVelocity.value;
-        testString += $"Gyro dir inputSystem: {gyroDir}";
-        Debug.Log($"Gyro dir inputSystem: {gyroDir}");
+
+        inputDirDelta = rollControlReference.action.ReadValue<Vector3>();
+        inputDir += inputDirDelta * Time.deltaTime;
+
 #endif
 
-        testString += " \n";
+        string debugString = $"Gyro dir inputSystem: {inputDirDelta} << \n" +
+                                     $"Gyro Total: {inputDir} << \n";
 
-        Vector2 actionDir = rollControlReference.action.ReadValue<Vector2>();
-        testString += $"Gyro dir reference: {actionDir}";
-        Debug.Log($"Gyro dir reference: {actionDir}");
-
-        showText.text = testString;
+        showText.text = debugString;
+        Debug.Log(debugString);
     }
 }

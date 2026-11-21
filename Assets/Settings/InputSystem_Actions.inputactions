@@ -91,7 +91,7 @@
                     "name": "Roll",
                     "type": "Value",
                     "id": "5f6a6bcf-88c3-4d29-9b1b-3bf74650b5b2",
-                    "expectedControlType": "Vector2",
+                    "expectedControlType": "Vector3",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -486,10 +486,10 @@
                 {
                     "name": "",
                     "id": "3ff0b4ba-3f27-4f22-ba5d-64cd083dc0de",
-                    "path": "<Sensor>/{Tilt}",
+                    "path": "<Gyroscope>/angularVelocity",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Touch;Gamepad;Keyboard&Mouse",
                     "action": "Roll",
                     "isComposite": false,
                     "isPartOfComposite": false
