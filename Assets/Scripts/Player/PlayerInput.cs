@@ -1,14 +1,40 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerInput : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [SerializeField]
+    private bool isGyroEnabled = false;
+
+    [SerializeField]
+    private InputActionReference gyroControls;
+    
+    public bool IsGyroEnabled { get { return isGyroEnabled; } private set { } }
+    
+    public void ActivateGyro()
     {
-        
+        isGyroEnabled = true;
     }
 
-    // Update is called once per frame
+    public void DeactivateGyro()
+    {
+        isGyroEnabled = false;
+    }
+
+    void Start()
+    {
+    }
+
+    private void OnEnable()
+    {
+        ActivateGyro();
+    }
+
+    private void OnDisable()
+    {
+        DeactivateGyro();
+    }
+
     void Update()
     {
         

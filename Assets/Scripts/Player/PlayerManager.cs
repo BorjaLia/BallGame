@@ -2,15 +2,27 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    [SerializeField]
+    private PlayerMovement movementScript;
+    [SerializeField]
+    private PlayerInput inputScript;
+
+
+    public PlayerMovement MovementScript { get { return movementScript; }private set { } }
+    public PlayerInput InputScript { get { return inputScript; }private set { } }
+
     void Start()
     {
-        
-    }
+        movementScript = GetComponent<PlayerMovement>();
+        if (!movementScript)
+        {
+            Debug.LogError("no movement script attached on player");
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        inputScript = GetComponent<PlayerInput>();
+        if (!inputScript)
+        {
+            Debug.LogError("no movement script attached on player");
+        }
     }
 }
