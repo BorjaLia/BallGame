@@ -49,6 +49,11 @@ public class PlayerInputHandler : MonoBehaviour
         DeactivateGyro();
     }
 
+    public void SetControlTypeTest(int type)
+    {
+        SetControlType((ControlType)type);
+    }
+
     public void SetControlType(ControlType newType)
     {
         DeactivateAllInputs();
