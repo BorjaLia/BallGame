@@ -22,22 +22,54 @@ public struct TilePrefabEntry<TTileType> where TTileType : Enum
 }
 
 [Serializable]
-public struct TileOverride<TTileType> where TTileType : Enum
+public class GridRow<TTileType> where TTileType : Enum
 {
-    public Vector2Int coordinates;
-    public TTileType type;
+    [HideInInspector] public string rowLabel;
+    public List<TTileType> tiles = new List<TTileType>();
 }
 
 public abstract class GridBuilderBase<TTileType> : MonoBehaviour where TTileType : Enum
 {
     [Header("Tile Prefabs")]
+    public float verticalOffset;
     public TTileType defaultTileType;
     public List<TilePrefabEntry<TTileType>> tilePrefabs = new List<TilePrefabEntry<TTileType>>();
 
-    [Header("Coordinate Overrides")]
-    public List<TileOverride<TTileType>> tileOverrides = new List<TileOverride<TTileType>>();
+    [Header("Grid Layout (Rows = Z, Elements = X)")]
+    public List<GridRow<TTileType>> gridRows = new List<GridRow<TTileType>>();
 
     protected abstract string ContainerName { get; }
+
+    public void SyncGridSize(Vector2Int gridCount)
+    {
+        if (gridCount.x <= 0 || gridCount.y <= 0) return;
+
+        while (gridRows.Count < gridCount.y)
+        {
+            gridRows.Add(new GridRow<TTileType>());
+        }
+
+        if (gridRows.Count > gridCount.y)
+        {
+            gridRows.RemoveRange(gridCount.y, gridRows.Count - gridCount.y);
+        }
+
+        for (int z = 0; z < gridCount.y; z++)
+        {
+            gridRows[z].rowLabel = $"Row {z} (Z={z})";
+            List<TTileType> rowTiles = gridRows[z].tiles;
+
+            while (rowTiles.Count < gridCount.x)
+            {
+                rowTiles.Add(defaultTileType);
+            }
+
+            if (rowTiles.Count > gridCount.x)
+            {
+                rowTiles.RemoveRange(gridCount.x, rowTiles.Count - gridCount.x);
+            }
+        }
+    }
 
     public virtual void Rebuild(GridSettings settings)
     {
@@ -49,6 +81,8 @@ public abstract class GridBuilderBase<TTileType> : MonoBehaviour where TTileType
             return;
         }
 
+        SyncGridSize(settings.gridCount);
+
         var prefabMap = new Dictionary<TTileType, GameObject>();
         foreach (var entry in tilePrefabs)
         {
@@ -56,14 +90,12 @@ public abstract class GridBuilderBase<TTileType> : MonoBehaviour where TTileType
                 prefabMap.Add(entry.type, entry.prefab);
         }
 
-        var overrideMap = new Dictionary<Vector2Int, TTileType>();
-        foreach (var ov in tileOverrides)
-        {
-            overrideMap[ov.coordinates] = ov.type;
-        }
-
         GameObject container = new GameObject(ContainerName);
         container.transform.SetParent(settings.targetParent, false);
+
+        Vector3 currentPos = container.transform.position;
+        currentPos.y += verticalOffset;
+        container.transform.position = currentPos;
 
         float tileWidth = settings.totalFloorSize.x / settings.gridCount.x;
         float tileDepth = settings.totalFloorSize.y / settings.gridCount.y;
@@ -81,10 +113,7 @@ public abstract class GridBuilderBase<TTileType> : MonoBehaviour where TTileType
 
             for (int z = 0; z < settings.gridCount.y; z++)
             {
-                Vector2Int coord = new Vector2Int(x, z);
-                TTileType currentType = overrideMap.TryGetValue(coord, out TTileType overriddenType)
-                    ? overriddenType
-                    : defaultTileType;
+                TTileType currentType = gridRows[z].tiles[x];
 
                 if (!prefabMap.TryGetValue(currentType, out GameObject prefab) || prefab == null)
                     continue;

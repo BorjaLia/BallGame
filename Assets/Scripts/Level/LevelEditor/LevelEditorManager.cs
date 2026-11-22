@@ -44,6 +44,25 @@ public class LevelEditorManager : MonoBehaviour
         ClearWalls();
     }
 
+    [ContextMenu("Generate Surrounding Walls")]
+    public void GenerateSurroundingWalls()
+    {
+        if (wallBuilder == null) return;
+
+        wallBuilder.GenerateSurroundingWalls(gridCount);
+        RebuildWalls();
+    }
+
+    [ContextMenu("Sync Grid Lists")]
+    public void SyncGridLayouts()
+    {
+        if (floorBuilder != null)
+            floorBuilder.SyncGridSize(gridCount);
+
+        if (wallBuilder != null)
+            wallBuilder.SyncGridSize(gridCount);
+    }
+
     public void RebuildFloor()
     {
         if (floorBuilder != null)
