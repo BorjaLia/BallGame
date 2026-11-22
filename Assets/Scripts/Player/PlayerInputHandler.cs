@@ -39,6 +39,7 @@ public class PlayerInputHandler : MonoBehaviour
     void Start()
     {
         MoveInput = Vector3.zero;
+        SetControlType(currentControlType);
     }
 
     private void OnEnable()

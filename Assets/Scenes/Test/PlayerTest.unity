@@ -2402,7 +2402,7 @@ PrefabInstance:
       objectReference: {fileID: 913559917}
     - target: {fileID: 1192965075653460687, guid: a9a51ff7debe03948b564654dc5bf0a7, type: 3}
       propertyPath: forceMult
-      value: 100
+      value: 1500
       objectReference: {fileID: 0}
     - target: {fileID: 1192965075653460687, guid: a9a51ff7debe03948b564654dc5bf0a7, type: 3}
       propertyPath: controller
