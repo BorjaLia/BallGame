@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -18,8 +19,15 @@ public class MainMenuManager : MonoBehaviour
     public GameObject loadingPanel;
     public Slider progressBar;
 
+    [Header("Scenes List")]
+    public List<string> sceneNames = new List<string>();
+
+    private SceneLoader loader;
+
     private void Start()
     {
+        loader = ServiceLocator.Instance.Get<SceneLoader>();
+
         mainMenuPanel.SetActive(false);
         storePanel.SetActive(false);
         creditsPanel.SetActive(false);
@@ -42,28 +50,20 @@ public class MainMenuManager : MonoBehaviour
 
     public void LoadLevel(int levelIndex)
     {
+        if (levelIndex < 1)
+        {
+            Debug.LogError("Cant load negative levels!");
+            return;
+        }
+
+        if (levelIndex > sceneNames.Count)
+        {
+            Debug.LogError("Level out of index");
+            return;
+        }
+
         MenuStateMachine.ChangeState(new LoadingState(this));
 
-        StartCoroutine(LoadSceneAsync(levelIndex));
-    }
-
-    private IEnumerator LoadSceneAsync(int levelIndex)
-    {
-        Application.backgroundLoadingPriority = ThreadPriority.BelowNormal;
-
-        AsyncOperation operation = SceneManager.LoadSceneAsync(levelIndex);
-
-        //operation.allowSceneActivation = false; 
-
-        while (!operation.isDone)
-        {
-            float progress = Mathf.Clamp01(operation.progress / 0.9f);
-
-            if (progressBar != null)
-            {
-                progressBar.value = progress;
-            }
-            yield return null;
-        }
+        loader.LoadLevel(sceneNames[levelIndex-1]);
     }
 }

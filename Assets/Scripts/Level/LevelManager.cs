@@ -1,9 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class LevelManager : MonoBehaviour
 {
     [SerializeField] private PlayerHandler playerHandler;
+
+    private SceneLoader loader;
 
     private void OnEnable()
     {
@@ -20,8 +23,15 @@ public class LevelManager : MonoBehaviour
         FindScriptReferences();
     }
 
+    private void Update()
+    {
+        if (Keyboard.current.escapeKey.wasPressedThisFrame) loader.LoadMainMenu();
+    }
+
     private void FindScriptReferences()
     {
+        loader = ServiceLocator.Instance.Get<SceneLoader>();
+
         if (!playerHandler)
         {
             Debug.LogError("No player reference set");

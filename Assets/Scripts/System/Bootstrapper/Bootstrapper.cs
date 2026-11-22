@@ -10,5 +10,6 @@ public static class Bootstrapper
         ServiceLocator sl = ServiceLocator.Get();
 
         sl.RegisterAsMonobehaviour<EventBus>();
+        sl.RegisterAsMonobehaviour<SceneLoader>();
     }
 }
