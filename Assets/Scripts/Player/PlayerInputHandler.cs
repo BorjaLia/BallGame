@@ -266,7 +266,6 @@ public class PlayerInputHandler : MonoBehaviour
         if (MoveInput != Vector2.zero) debugString += $"Move output: {MoveInput}";
 
         showText.text = debugString;
-        Debug.Log(debugString);
-
+        //Debug.Log(debugString);
     }
 }

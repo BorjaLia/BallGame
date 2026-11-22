@@ -1,12 +1,11 @@
 using System;
 using UnityEngine;
-using static UnityEngine.LowLevelPhysics2D.PhysicsComposer;
 
 [RequireComponent(typeof(Collider))]
 public abstract class InteractableObject : MonoBehaviour
 {
-    [SerializeField] protected TagHandle playerTag;
     [SerializeField] protected Collider col;
+    [SerializeField] protected string playerTag;
 
     private EventBus eventBus;
 
@@ -40,11 +39,11 @@ public abstract class InteractableObject : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(UnityEngine.Collider other)
     {
-        if (collision.gameObject.CompareTag(playerTag))
+        if (other.CompareTag(playerTag))
         {
-            if(onPlayerCollisionAction != null) onPlayerCollisionAction?.DynamicInvoke(collision.gameObject);
+            if(onPlayerCollisionAction != null) onPlayerCollisionAction?.DynamicInvoke();
             if (onPlayerCollisionEvent != null) eventBus.Publish(onPlayerCollisionEvent);
         }
     }

@@ -5,6 +5,16 @@ public class LevelManager : MonoBehaviour
 {
     [SerializeField] private PlayerHandler playerHandler;
 
+    private void OnEnable()
+    {
+        ServiceLocator.Instance.RegisterAsMonobehaviour<LevelManager>(this);
+    }
+
+    private void OnDisable()
+    {
+        ServiceLocator.Instance.Remove<LevelManager>();
+    }
+
     void Start()
     {
         FindScriptReferences();

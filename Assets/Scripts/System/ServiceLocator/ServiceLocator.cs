@@ -31,7 +31,7 @@ public class ServiceLocator : Singleton<ServiceLocator>
         Debug.Log(type.Name + " has been registered as service");
     }
 
-    public void RegisterAsMonobehaviour<T>() where T : MonoBehaviour
+    public void RegisterAsMonobehaviour<T>(T instance = null) where T : MonoBehaviour
     {
         Type type = typeof(T);
 
@@ -41,11 +41,11 @@ public class ServiceLocator : Singleton<ServiceLocator>
             return;
         }
 
-        GameObject gameObjectHandle = new GameObject();
+        GameObject gameObjectHandle = instance == null ? new GameObject() : instance.gameObject;
         gameObjectHandle.name = typeof(T).ToString();
         UnityEngine.Object.DontDestroyOnLoad(gameObjectHandle);
 
-        T service = gameObjectHandle.AddComponent<T>();
+        T service = instance == null ? gameObjectHandle.AddComponent<T>() : instance;
 
         _services.Add(type, service);
         _gameObjectHandles.Add(type, gameObjectHandle);
