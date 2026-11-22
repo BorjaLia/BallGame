@@ -46,7 +46,7 @@ public class MainMenuManager : MonoBehaviour
     public void GoToStore() => MenuStateMachine.ChangeState(new StoreState(this));
     public void GoToCredits() => MenuStateMachine.ChangeState(new CreditsState(this));
     public void GoToPlay() => MenuStateMachine.ChangeState(new PlayState(this));
-    public void GoToPlugin() => MenuStateMachine.ChangeState(new PluginState(this));
+    public void GoToPlugin() => loader.LoadLevel("Plugin");
 
     public void LoadLevel(int levelIndex)
     {
