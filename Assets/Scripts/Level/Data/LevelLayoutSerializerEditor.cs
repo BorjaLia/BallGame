@@ -1,6 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 
+#if UNITY_EDITOR
 [CustomEditor(typeof(LevelLayoutSerializer))]
 public class LevelLayoutSerializerEditor : Editor
 {
@@ -73,3 +74,4 @@ public class LevelLayoutSerializerEditor : Editor
         if (manager.wallBuilder != null) EditorUtility.SetDirty(manager.wallBuilder);
     }
 }
+#endif
