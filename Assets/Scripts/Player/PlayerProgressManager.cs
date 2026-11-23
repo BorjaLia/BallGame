@@ -51,7 +51,6 @@ public class PlayerProgressManager : MonoBehaviour
         }
     }
 
-    #region Coins
     private void HandleCoinCollected(OnCoinCollected e)
     {
         AddCoins(e.Amount);
@@ -79,9 +78,7 @@ public class PlayerProgressManager : MonoBehaviour
         eventBus?.Publish(new CoinsChangedEvent(Coins));
         return true;
     }
-    #endregion
 
-    #region Stat Upgrades
     public int GetUnlockedStatLevel(StatUpgradeData data)
     {
         if (data == null) return 0;
@@ -154,9 +151,7 @@ public class PlayerProgressManager : MonoBehaviour
 
         return result;
     }
-    #endregion
 
-    #region Cosmetics
     public bool IsColorUnlocked(CosmeticColorData data)
     {
         if (data == null) return false;
@@ -209,9 +204,7 @@ public class PlayerProgressManager : MonoBehaviour
 
         eventBus?.Publish(new CosmeticChangedEvent(data));
     }
-    #endregion
 
-    #region Level Progression (Future Use)
     public void UnlockLevel(int levelIndex)
     {
         if (levelIndex <= HighestUnlockedLevel) return;
@@ -220,9 +213,7 @@ public class PlayerProgressManager : MonoBehaviour
         PlayerPrefs.SetInt(HighestLevelKey, HighestUnlockedLevel);
         PlayerPrefs.Save();
     }
-    #endregion
 
-    #region Persistence Helpers
     private void LoadProgress()
     {
         Coins = PlayerPrefs.GetInt(CoinsKey, 0);
@@ -243,5 +234,4 @@ public class PlayerProgressManager : MonoBehaviour
         eventBus?.Publish(new CoinsChangedEvent(Coins));
         Debug.Log("[PlayerProgressManager] All progress reset.");
     }
-    #endregion
 }

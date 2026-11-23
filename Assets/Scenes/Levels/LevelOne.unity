@@ -1222,8 +1222,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3bbb8e273078c84caf324c2de8fa16e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerProgressManager
-  statUpgrades: []
-  cosmeticColors: []
+  statUpgrades:
+  - {fileID: 11400000, guid: dac35482b73325b4886bfe40b08b711e, type: 2}
+  - {fileID: 11400000, guid: 4bdb20f79259d304d85bb1c9f1a02595, type: 2}
+  - {fileID: 11400000, guid: 060bda05a80613345918387f52b45c53, type: 2}
+  cosmeticColors:
+  - {fileID: 11400000, guid: 0898079f7f599a54ba23ac2e80d3a929, type: 2}
+  - {fileID: 11400000, guid: e20528c799606b54eb250eb3bb19c126, type: 2}
+  - {fileID: 11400000, guid: 842706551ee779040b23bac78c3b664b, type: 2}
 --- !u!4 &593939738
 Transform:
   m_ObjectHideFlags: 0
