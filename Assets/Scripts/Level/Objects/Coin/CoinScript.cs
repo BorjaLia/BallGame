@@ -4,26 +4,31 @@ public class CoinScript : InteractableObject
 {
     [SerializeField] private int value = 1;
 
-    public int Value { get { return value; } private set { } }
+    public int Value => value;
 
-    void OnEnable()
+    private void OnEnable()
     {
         onPlayerCollisionAction += OnPickup;
+        onPlayerCollisionEvent = new OnCoinCollected(value);
     }
 
-    void OnDisable()
+    private void OnDisable()
     {
         onPlayerCollisionAction -= OnPickup;
     }
 
     private void OnPickup()
     {
-        Debug.Log("Coin has been picked up!");
-        Destroy(gameObject,1.0f);
+        if (col != null)
+            col.enabled = false;
+
+        Debug.Log($"Coin picked up (+{value})!");
+        Destroy(gameObject, 1.0f);
     }
 
     public void SetValue(int newValue)
     {
         value = newValue;
+        onPlayerCollisionEvent = new OnCoinCollected(value);
     }
 }
