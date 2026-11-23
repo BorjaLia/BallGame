@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class LevelEditorManager : MonoBehaviour
@@ -80,7 +81,22 @@ public class LevelEditorManager : MonoBehaviour
         if (wallBuilder != null)
         {
             wallBuilder.Rebuild(CurrentSettings);
+            CacheRoomExits();
         }
+    }
+
+    private void CacheRoomExits()
+    {
+        Room room = TargetParent.GetComponent<Room>();
+        if (room == null)
+            room = TargetParent.gameObject.AddComponent<Room>();
+
+        var foundExits = new List<ExitWallScript>(TargetParent.GetComponentsInChildren<ExitWallScript>());
+        room.SetExits(foundExits);
+
+#if UNITY_EDITOR
+        UnityEditor.EditorUtility.SetDirty(room);
+#endif
     }
 
     public void ClearFloor()

@@ -5,7 +5,7 @@ using UnityEngine;
 public class RoomManager : MonoBehaviour
 {
     [Header("Rooms")]
-    [SerializeField] private List<Transform> roomCenters = new List<Transform>();
+    [SerializeField] private List<Room> rooms = new List<Room>();
 
     [Header("Camera Settings")]
     [SerializeField] private Camera mainCamera;
@@ -28,22 +28,15 @@ public class RoomManager : MonoBehaviour
         }
 
         eventBus = ServiceLocator.Instance.Get<EventBus>();
+
         if (eventBus != null)
         {
             eventBus.Subscribe<OnRoomExit>(HandleRoomExit);
         }
 
-        if (roomCenters.Count > 0 && mainCamera != null)
+        if (rooms.Count > 0 && mainCamera != null)
         {
-            mainCamera.transform.position = roomCenters[0].position + cameraOffset;
-        }
-    }
-
-    private void OnDestroy()
-    {
-        if (eventBus != null)
-        {
-            eventBus.Unsubscribe<OnRoomExit>(HandleRoomExit);
+            mainCamera.transform.position = rooms[0].transform.position + cameraOffset;
         }
     }
 
@@ -51,32 +44,26 @@ public class RoomManager : MonoBehaviour
     {
         if (isTransitioning) return;
 
-        ExitWallScript[] roomExits = e.ExitWall.transform.parent != null
-            ? e.ExitWall.transform.parent.GetComponentsInChildren<ExitWallScript>()
-            : new[] { e.ExitWall };
+        Room departingRoom = rooms[currentRoomIndex];
+        departingRoom.DisarmAllExits();
 
-        foreach (ExitWallScript exit in roomExits)
+        if (currentRoomIndex + 1 >= rooms.Count)
         {
-            exit.Disarm();
-        }
-
-        if (currentRoomIndex + 1 >= roomCenters.Count)
-        {
-            Debug.LogWarning("[RoomManager] No next room assigned in roomCenters!");
+            Debug.LogWarning("[RoomManager] No next room assigned in rooms!");
             return;
         }
 
         isTransitioning = true;
         currentRoomIndex++;
-        StartCoroutine(TransitionToRoomRoutine(roomCenters[currentRoomIndex], e.ExitWall, roomExits));
+        StartCoroutine(TransitionToRoomRoutine(departingRoom, rooms[currentRoomIndex], e.ExitWall));
     }
 
-    private IEnumerator TransitionToRoomRoutine(Transform targetRoom, ExitWallScript triggeredExit, ExitWallScript[] roomExits)
+    private IEnumerator TransitionToRoomRoutine(Room departingRoom, Room targetRoom, ExitWallScript triggeredExit)
     {
         SetPlayerMovement(false);
 
         Vector3 camStartPos = mainCamera.transform.position;
-        Vector3 camEndPos = targetRoom.position + cameraOffset;
+        Vector3 camEndPos = targetRoom.transform.position + cameraOffset;
 
         Vector3 playerStartPos = playerHandler.transform.position;
         Vector3 playerEndPos = triggeredExit.CheckpointPosition;
@@ -96,13 +83,18 @@ public class RoomManager : MonoBehaviour
         mainCamera.transform.position = camEndPos;
         playerHandler.transform.position = playerEndPos;
 
-        foreach (ExitWallScript exit in roomExits)
-        {
-            exit.LockExit();
-        }
+        departingRoom.LockAllExits();
 
         SetPlayerMovement(true);
         isTransitioning = false;
+    }
+
+    private void OnDestroy()
+    {
+        if (eventBus != null)
+        {
+            eventBus.Unsubscribe<OnRoomExit>(HandleRoomExit);
+        }
     }
 
     private void SetPlayerMovement(bool enabled)

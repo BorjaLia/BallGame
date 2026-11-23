@@ -14,7 +14,7 @@ public class LevelManager : MonoBehaviour
     private EventBus eventBus;
 
     private Vector3 currentCheckpoint;
-    private int currentLives;
+    private int currentLives = 5;
     private bool isHandlingDeath = false;
     private bool isLevelEnded = false;
 
