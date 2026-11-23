@@ -12,9 +12,13 @@ public class PlayerHandler : MonoBehaviour
 
     [Header("Stats")]
     [SerializeField] private PlayerStats stats = PlayerStats.Default;
+    [SerializeField] private Renderer marbleRenderer;
 
     private EventBus eventBus;
     private Rigidbody rb;
+
+    public int CurrentLives { get; private set; }
+    public int MaxLives => stats.maxLives;
 
     private int iceTileCount = 0;
     private float defaultLinearDamping;
@@ -26,16 +30,15 @@ public class PlayerHandler : MonoBehaviour
     {
         FindScriptReferences();
 
-        rb = GetComponent<Rigidbody>();
-        defaultLinearDamping = rb.linearDamping;
-
-        eventBus = ServiceLocator.Instance.Get<EventBus>();
-        if (eventBus != null)
+        PlayerProgressManager progressManager = ServiceLocator.Instance.Get<PlayerProgressManager>();
+        
+        if (progressManager != null)
         {
-            eventBus.Subscribe<SpeedBoostTriggeredEvent>(HandleSpeedBoost);
-            eventBus.Subscribe<IceTileEnteredEvent>(HandleIceEnter);
-            eventBus.Subscribe<IceTileExitedEvent>(HandleIceExit);
+            stats = progressManager.GetCalculatedStats();
+            ApplyCosmeticColor(progressManager.GetSelectedColor());
         }
+
+        CurrentLives = Mathf.Max(1, stats.maxLives);
     }
 
     private void FindScriptReferences()
@@ -57,6 +60,22 @@ public class PlayerHandler : MonoBehaviour
         {
             Debug.LogError("no movement script attached on player");
         }
+
+        rb = GetComponent<Rigidbody>();
+        defaultLinearDamping = rb.linearDamping;
+
+        if (marbleRenderer == null)
+        {
+            marbleRenderer = GetComponentInChildren<Renderer>();
+        }
+
+        eventBus = ServiceLocator.Instance.Get<EventBus>();
+        if (eventBus != null)
+        {
+            eventBus.Subscribe<SpeedBoostTriggeredEvent>(HandleSpeedBoost);
+            eventBus.Subscribe<IceTileEnteredEvent>(HandleIceEnter);
+            eventBus.Subscribe<IceTileExitedEvent>(HandleIceExit);
+        }
     }
 
     private void OnDestroy()
@@ -77,6 +96,35 @@ public class PlayerHandler : MonoBehaviour
         }
 
         movementScript?.SetMovementEnabled(isEnabled);
+    }
+
+    public void LoseLife()
+    {
+        CurrentLives = Mathf.Max(0, CurrentLives - 1);
+        eventBus?.Publish(new PlayerLivesChangedEvent(CurrentLives));
+    }
+
+    public void AddLife(int amount = 1)
+    {
+        if (amount <= 0) return;
+
+        CurrentLives += amount;
+        eventBus?.Publish(new PlayerLivesChangedEvent(CurrentLives));
+    }
+
+    public void ResetTileEffects()
+    {
+        iceTileCount = 0;
+        currentControlMultiplier = 1f;
+
+        if (rb != null)
+            rb.linearDamping = defaultLinearDamping;
+    }
+
+    private void ApplyCosmeticColor(Color color)
+    {
+        if (marbleRenderer != null)
+            marbleRenderer.material.color = color;
     }
     private void HandleSpeedBoost(SpeedBoostTriggeredEvent e)
     {

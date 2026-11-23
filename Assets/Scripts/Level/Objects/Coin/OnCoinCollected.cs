@@ -1,14 +1,11 @@
-public struct OnCoinCollected : IEvent 
+public struct OnCoinCollected : IEvent
 {
-    int value;
+    public int Amount;
+    public OnCoinCollected(int amount) => Amount = amount;
+}
 
-    public OnCoinCollected(int value)
-    {
-        this.value = value;
-
-        if(value <= 0)
-        {
-            this.value = 1;
-        }
-    }
-};
+public struct CoinsChangedEvent : IEvent
+{
+    public int NewTotal;
+    public CoinsChangedEvent(int newTotal) => NewTotal = newTotal;
+}

@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -14,7 +12,6 @@ public class LevelManager : MonoBehaviour
     private EventBus eventBus;
 
     private Vector3 currentCheckpoint;
-    private int currentLives = 5;
     private bool isHandlingDeath = false;
     private bool isLevelEnded = false;
 
@@ -38,7 +35,6 @@ public class LevelManager : MonoBehaviour
         {
             eventBus.Subscribe<OnRoomExit>(HandleRoomExit);
             eventBus.Subscribe<OnWin>(HandleLevelWon);
-            eventBus.Publish(new PlayerLivesChangedEvent(currentLives));
         }
     }
 
@@ -57,6 +53,17 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    private void HandleRoomExit(OnRoomExit e)
+    {
+        currentCheckpoint = e.ExitWall.CheckpointPosition;
+    }
+
+    private void HandleLevelWon(OnWin e)
+    {
+        isLevelEnded = true;
+        SetPlayerActive(false);//trigger ui
+    }
+
     private void CheckFallDeath()
     {
         if (isHandlingDeath || isLevelEnded || playerHandler == null) return;
@@ -67,25 +74,12 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    private void HandleRoomExit(OnRoomExit e)
-    {
-        currentCheckpoint = e.ExitWall.CheckpointPosition;
-    }
-
-    private void HandleLevelWon(OnWin e)
-    {
-        isLevelEnded = true;
-        SetPlayerActive(false);
-    }
-
     private IEnumerator HandlePlayerDeathRoutine()
     {
         isHandlingDeath = true;
-        currentLives--;
+        playerHandler.LoseLife();
 
-        eventBus?.Publish(new PlayerLivesChangedEvent(currentLives));
-
-        if (currentLives > 0)
+        if (playerHandler.CurrentLives > 0)
         {
             SetPlayerActive(false);
             yield return new WaitForSeconds(respawnDelay);
@@ -98,7 +92,7 @@ public class LevelManager : MonoBehaviour
         {
             isLevelEnded = true;
             SetPlayerActive(false);
-            eventBus?.Publish(new OnLoss()); // add death screen
+            eventBus?.Publish(new OnLoss());
         }
     }
 
