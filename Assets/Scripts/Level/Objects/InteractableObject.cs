@@ -43,7 +43,7 @@ public abstract class InteractableObject : MonoBehaviour
     {
         if (other.CompareTag(playerTag))
         {
-            if(onPlayerCollisionAction != null) onPlayerCollisionAction?.DynamicInvoke();
+            if(onPlayerCollisionAction != null) onPlayerCollisionAction?.Invoke();
             if (onPlayerCollisionEvent != null) eventBus.Publish(onPlayerCollisionEvent);
         }
     }

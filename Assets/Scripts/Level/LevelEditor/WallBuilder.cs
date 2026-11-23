@@ -5,6 +5,7 @@ public enum WallTileType
 {
     None,
     Normal,
+    Entry,
     Exit,
     Breakable
 }

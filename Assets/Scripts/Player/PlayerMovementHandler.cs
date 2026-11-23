@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerMovementHandler : MonoBehaviour
 {
@@ -54,9 +55,29 @@ public class PlayerMovementHandler : MonoBehaviour
     {
         dir = new Vector3(inputHandler.MoveInput.x,0.0f,inputHandler.MoveInput.y);
         
-        rb.AddForce(dir * forceMult * Time.fixedDeltaTime, ForceMode.Force);
+        rb.AddForce(dir * forceMult * controller.ControlMultiplier * Time.fixedDeltaTime, ForceMode.Force);
+        
+        if (rb.linearVelocity.sqrMagnitude >= maxSpeedSqr)
+        {
+            rb.linearVelocity = Vector3.ClampMagnitude(rb.linearVelocity, maxSpeed);
+        }
 
-        if(rb.linearVelocity.sqrMagnitude >= maxSpeedSqr) Vector3.ClampMagnitude(rb.linearVelocity, maxSpeed);
         speedDebug = rb.linearVelocity.magnitude;
+    }
+
+    public void SetMovementEnabled(bool isEnabled)
+    {
+        enabled = isEnabled;
+
+        if (rb != null)
+        {
+            if (!isEnabled && !rb.isKinematic)
+            {
+                rb.linearVelocity = Vector3.zero;
+                rb.angularVelocity = Vector3.zero;
+            }
+
+            rb.isKinematic = !isEnabled;
+        }
     }
 }

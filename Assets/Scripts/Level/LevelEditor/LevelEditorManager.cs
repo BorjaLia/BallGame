@@ -57,34 +57,46 @@ public class LevelEditorManager : MonoBehaviour
     public void SyncGridLayouts()
     {
         if (floorBuilder != null)
+        {
             floorBuilder.SyncGridSize(gridCount);
+        }
 
         if (wallBuilder != null)
+        {
             wallBuilder.SyncGridSize(gridCount);
+        }
     }
 
     public void RebuildFloor()
     {
         if (floorBuilder != null)
+        {
             floorBuilder.Rebuild(CurrentSettings);
+        }
     }
 
     public void RebuildWalls()
     {
         if (wallBuilder != null)
+        {
             wallBuilder.Rebuild(CurrentSettings);
+        }
     }
 
     public void ClearFloor()
     {
         if (floorBuilder != null)
+        {
             floorBuilder.Clear(TargetParent);
+        }
     }
 
     public void ClearWalls()
     {
         if (wallBuilder != null)
+        {
             wallBuilder.Clear(TargetParent);
+        }
     }
 
     private void OnDrawGizmosSelected()
