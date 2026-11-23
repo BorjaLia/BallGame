@@ -22,7 +22,7 @@ public class ShopUIController : MonoBehaviour
     [SerializeField] private Transform cosmeticsContainer;
     [SerializeField] private CosmeticColorSlotUI colorSlotPrefab;
 
-    private PlayerProgressManager progressManager;
+    [SerializeField] private PlayerProgressManager progressManager;
     private EventBus eventBus;
 
     private readonly List<StatUpgradeRowUI> spawnedStatRows = new List<StatUpgradeRowUI>();
@@ -30,7 +30,8 @@ public class ShopUIController : MonoBehaviour
 
     private void Start()
     {
-        progressManager = ServiceLocator.Instance.Get<PlayerProgressManager>();
+        if (progressManager == null) progressManager = ServiceLocator.Instance.Get<PlayerProgressManager>();
+
         eventBus = ServiceLocator.Instance.Get<EventBus>();
 
         if (progressManager == null)
@@ -104,8 +105,6 @@ public class ShopUIController : MonoBehaviour
 
     private void RefreshAll()
     {
-        coinsText.text = progressManager.Coins.ToString();
-
         foreach (var row in spawnedStatRows)
         {
             row.Refresh();
@@ -115,6 +114,8 @@ public class ShopUIController : MonoBehaviour
         {
             slot.Refresh();
         }
+
+        if(coinsText) coinsText.text = "Coins: " + progressManager.Coins;
     }
 
     private void HandleCoinsChanged(CoinsChangedEvent e) => RefreshAll();

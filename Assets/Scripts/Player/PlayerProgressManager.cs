@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class PlayerProgressManager : MonoBehaviour
 {
+    [Header("Debug coins")]
+    public int extraCoins;
+
     [Header("Shop Catalog")]
     [SerializeField] private List<StatUpgradeData> statUpgrades = new List<StatUpgradeData>();
     [SerializeField] private List<CosmeticColorData> cosmeticColors = new List<CosmeticColorData>();
@@ -23,6 +26,8 @@ public class PlayerProgressManager : MonoBehaviour
         ServiceLocator.Instance.RegisterAsMonobehaviour<PlayerProgressManager>(this);
 
         LoadProgress();
+
+        Coins += extraCoins;
     }
 
     private void Start()

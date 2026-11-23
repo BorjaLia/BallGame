@@ -47,6 +47,7 @@ public abstract class FloorTile : MonoBehaviour
         {
             onPlayerEnterAction?.Invoke();
             if (onPlayerEnterEvent != null) eventBus.Publish(onPlayerEnterEvent);
+            Debug.Log("Player entered special tile!");
         }
     }
 
@@ -56,6 +57,7 @@ public abstract class FloorTile : MonoBehaviour
         {
             onPlayerExitAction?.Invoke();
             if (onPlayerExitEvent != null) eventBus.Publish(onPlayerExitEvent);
+            Debug.Log("Player exited special tile!");
         }
     }
 }

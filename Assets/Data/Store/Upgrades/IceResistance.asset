@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: IceResistance
   m_EditorClassIdentifier: Assembly-CSharp::StatUpgradeData
   statId: ice_res
-  displayName: Ice Resistance
+  displayName: Friction
   statType: 2
   baseValue: 0
   valuePerLevel: 0.15

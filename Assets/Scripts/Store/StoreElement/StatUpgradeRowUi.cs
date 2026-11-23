@@ -68,7 +68,7 @@ public class StatUpgradeRowUI : MonoBehaviour
         {
             int nextCost = statData.GetCostForLevel(unlocked + 1);
             buyButton.interactable = progressManager.Coins >= nextCost;
-            if (buyButtonText != null) buyButtonText.text = $"Unlock ({nextCost})";
+            if (buyButtonText != null) buyButtonText.text = $"{nextCost}";
         }
     }
 

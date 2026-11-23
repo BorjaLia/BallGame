@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SpeedResistance
   m_EditorClassIdentifier: Assembly-CSharp::StatUpgradeData
   statId: speed_res
-  displayName: Speed Resistance
+  displayName: Weight
   statType: 1
   baseValue: 0
   valuePerLevel: -0.2
