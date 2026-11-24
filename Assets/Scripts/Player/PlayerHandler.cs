@@ -21,22 +21,21 @@ public class PlayerHandler : MonoBehaviour
     public int MaxLives => stats.maxLives;
 
     private int iceTileCount = 0;
-    private float defaultLinearDamping;
-    private float currentControlMultiplier = 1f;
-
-    public float ControlMultiplier { get { return currentControlMultiplier; } private set { } }
+    private float defaultForceMult;
 
     void Start()
     {
         FindScriptReferences();
 
         PlayerProgressManager progressManager = ServiceLocator.Instance.Get<PlayerProgressManager>();
-        
+
         if (progressManager != null)
         {
             stats = progressManager.GetCalculatedStats();
             ApplyCosmeticColor(progressManager.GetSelectedColor());
         }
+
+        defaultForceMult = movementScript.forceMult;
 
         CurrentLives = Mathf.Max(1, stats.maxLives);
     }
@@ -61,19 +60,18 @@ public class PlayerHandler : MonoBehaviour
             Debug.LogError("no movement script attached on player");
         }
 
-        rb = GetComponent<Rigidbody>();
-        defaultLinearDamping = rb.linearDamping;
-
         if (marbleRenderer == null)
         {
             marbleRenderer = GetComponentInChildren<Renderer>();
         }
 
+        rb = GetComponent<Rigidbody>();
+
         eventBus = ServiceLocator.Instance.Get<EventBus>();
 
         if (eventBus != null)
         {
-            eventBus.Subscribe<SpeedBoostTriggeredEvent>(HandleSpeedBoost);
+            eventBus.Subscribe<OnSpeedBoost>(HandleSpeedBoost);
             eventBus.Subscribe<IceTileEnteredEvent>(HandleIceEnter);
             eventBus.Subscribe<IceTileExitedEvent>(HandleIceExit);
         }
@@ -87,7 +85,7 @@ public class PlayerHandler : MonoBehaviour
     {
         if (eventBus != null)
         {
-            eventBus.Unsubscribe<SpeedBoostTriggeredEvent>(HandleSpeedBoost);
+            eventBus.Unsubscribe<OnSpeedBoost>(HandleSpeedBoost);
             eventBus.Unsubscribe<IceTileEnteredEvent>(HandleIceEnter);
             eventBus.Unsubscribe<IceTileExitedEvent>(HandleIceExit);
         }
@@ -120,9 +118,7 @@ public class PlayerHandler : MonoBehaviour
     public void ResetTileEffects()
     {
         iceTileCount = 0;
-        currentControlMultiplier = 1f;
-
-        if (rb != null) rb.linearDamping = defaultLinearDamping;
+        movementScript.forceMult = defaultForceMult;
     }
 
     private void ApplyCosmeticColor(Color color)
@@ -130,9 +126,13 @@ public class PlayerHandler : MonoBehaviour
         if (marbleRenderer != null)
             marbleRenderer.material.color = color;
     }
-    private void HandleSpeedBoost(SpeedBoostTriggeredEvent e)
+    private void HandleSpeedBoost(OnSpeedBoost e)
     {
-        if (rb == null) return;
+        if (rb == null)
+        {
+            Debug.LogError("No rigidbody found!");
+            return;
+        }
 
         Vector3 horizontalVel = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
         Vector3 boostDir = horizontalVel.sqrMagnitude > 0.01f ? horizontalVel.normalized : transform.forward;
@@ -145,11 +145,11 @@ public class PlayerHandler : MonoBehaviour
     {
         iceTileCount++;
 
-        float effectiveDampingMult = Mathf.Lerp(e.DampingMultiplier, 1f, stats.iceGrip);
-        float effectiveControlMult = Mathf.Lerp(e.ControlMultiplier, 1f, stats.iceGrip);
+        float effectiveControlMult = Mathf.Lerp(e.ControlMultiplier, defaultForceMult, stats.iceGrip);
 
-        rb.linearDamping = defaultLinearDamping * effectiveDampingMult;
-        currentControlMultiplier = effectiveControlMult;
+        movementScript.forceMult = effectiveControlMult;
+        Debug.Log($"Ice entered: event at {e.ControlMultiplier}");
+        Debug.Log($"Ice entered: control at {effectiveControlMult}%");
     }
 
     private void HandleIceExit(IceTileExitedEvent e)
@@ -158,8 +158,7 @@ public class PlayerHandler : MonoBehaviour
 
         if (iceTileCount == 0)
         {
-            rb.linearDamping = defaultLinearDamping;
-            currentControlMultiplier = 1f;
+            movementScript.forceMult = defaultForceMult;
         }
     }
 }

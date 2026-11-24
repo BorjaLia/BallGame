@@ -6,9 +6,18 @@ public class SpeedTileScript : FloorTile
 
     public float BoostForce => boostForce;
 
-    protected override void Start()
+    private void OnEnable()
     {
-        base.Start();
-        onPlayerEnterEvent = new SpeedBoostTriggeredEvent(boostForce);
+        onPlayerEnterAction += OnPlayerEnter;
+    }
+
+    private void OnDisable()
+    {
+        onPlayerEnterAction -= OnPlayerEnter;
+    }
+
+    private void OnPlayerEnter()
+    {
+        eventBus?.Publish(new OnSpeedBoost());
     }
 }

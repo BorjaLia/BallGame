@@ -14,7 +14,8 @@ public class PlayerMovementHandler : MonoBehaviour
 
     [SerializeField] private float speedDebug;
     [SerializeField] private Vector3 dir;
-    [SerializeField] private float forceMult = 1.0f;
+    [SerializeField] public float forceMult = 1.0f;
+   
 
     void Awake()
     {
@@ -55,7 +56,7 @@ public class PlayerMovementHandler : MonoBehaviour
     {
         dir = new Vector3(inputHandler.MoveInput.x,0.0f,inputHandler.MoveInput.y);
         
-        rb.AddForce(dir * forceMult * controller.ControlMultiplier * Time.fixedDeltaTime, ForceMode.Force);
+        rb.AddForce(dir * forceMult * Time.fixedDeltaTime, ForceMode.Force);
         
         if (rb.linearVelocity.sqrMagnitude >= maxSpeedSqr)
         {

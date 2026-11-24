@@ -1,8 +1,8 @@
-public struct SpeedBoostTriggeredEvent : IEvent
+public struct OnSpeedBoost : IEvent
 {
     public float BoostForce;
 
-    public SpeedBoostTriggeredEvent(float boostForce)
+    public OnSpeedBoost(float boostForce)
     {
         BoostForce = boostForce;
     }

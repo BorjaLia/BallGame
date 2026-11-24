@@ -128,8 +128,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::IceTileScript
   col: {fileID: 2399545819671453762}
   playerTag: Player
-  dampingMultiplier: 0.15
-  controlMultiplier: 0.35
+  controlMultiplier: 60
 --- !u!65 &2399545819671453762
 BoxCollider:
   m_ObjectHideFlags: 0
