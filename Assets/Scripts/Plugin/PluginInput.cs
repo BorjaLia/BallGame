@@ -17,6 +17,6 @@ public class PluginInput : MonoBehaviour
 
     void Update()
     {
-        if (Keyboard.current.escapeKey.wasPressedThisFrame) loader.LoadMainMenu();
+        if (Keyboard.current.escapeKey.wasPressedThisFrame) loader.LoadScene(SceneLoader.SceneNames.MainMenu);
     }
 }

@@ -2788,6 +2788,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5309524af8cbfc34fbc86435803e67d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LevelManager
+  nextLevel: 2
   debugPanel: {fileID: 1368579289}
   playerHandler: {fileID: 913559919}
   fallDeathY: -5

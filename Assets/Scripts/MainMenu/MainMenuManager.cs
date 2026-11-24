@@ -20,9 +20,6 @@ public class MainMenuManager : MonoBehaviour
     public GameObject loadingPanel;
     public Slider progressBar;
 
-    [Header("Scenes List")]
-    public List<string> sceneNames = new List<string>();
-
     private SceneLoader loader;
 
     private void Start()
@@ -47,7 +44,7 @@ public class MainMenuManager : MonoBehaviour
     public void GoToStore() => MenuStateMachine.ChangeState(new StoreState(this));
     public void GoToCredits() => MenuStateMachine.ChangeState(new CreditsState(this));
     public void GoToPlay() => MenuStateMachine.ChangeState(new PlayState(this));
-    public void GoToPlugin() => loader.LoadLevel("Plugin");
+    public void GoToPlugin() => loader.LoadScene(SceneLoader.SceneNames.Plugin);
     public void GoToTutorial() => MenuStateMachine.ChangeState(new TutorialState(this));
 
     public void ShowAchivements()
@@ -62,7 +59,7 @@ public class MainMenuManager : MonoBehaviour
             return;
         }
 
-        if (levelIndex > sceneNames.Count)
+        if (levelIndex > (int)SceneLoader.SceneNames.LevelThree)
         {
             Debug.LogError("Level out of index");
             return;
@@ -70,6 +67,6 @@ public class MainMenuManager : MonoBehaviour
 
         MenuStateMachine.ChangeState(new LoadingState(this));
 
-        loader.LoadLevel(sceneNames[levelIndex-1]);
+        loader.LoadScene((SceneLoader.SceneNames)(levelIndex-1));
     }
 }

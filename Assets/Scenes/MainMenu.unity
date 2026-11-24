@@ -786,10 +786,6 @@ MonoBehaviour:
   tutorialPanel: {fileID: 1534445309}
   loadingPanel: {fileID: 1362746841}
   progressBar: {fileID: 1078296741}
-  sceneNames:
-  - LevelOne
-  - LevelTwo
-  - LevelThree
 --- !u!4 &92950066
 Transform:
   m_ObjectHideFlags: 0

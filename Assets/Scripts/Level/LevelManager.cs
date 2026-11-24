@@ -4,6 +4,8 @@ using UnityEngine.InputSystem;
 
 public class LevelManager : MonoBehaviour
 {
+    [SerializeField]private SceneLoader.SceneNames nextLevel;
+
     [SerializeField] private GameObject debugPanel;
 
     [SerializeField] private PlayerHandler playerHandler;
@@ -39,7 +41,7 @@ public class LevelManager : MonoBehaviour
 
     private void Update()
     {
-        if (Keyboard.current.escapeKey.wasPressedThisFrame) loader.LoadMainMenu();
+        if (Keyboard.current.escapeKey.wasPressedThisFrame) loader.LoadScene(SceneLoader.SceneNames.MainMenu);
         CheckFallDeath();
     }
 
@@ -67,7 +69,7 @@ public class LevelManager : MonoBehaviour
         Debug.Log("Level manager handling win!");
         isLevelEnded = true;
         SetPlayerActive(false);
-        loader.LoadMainMenu();
+        loader.LoadScene(nextLevel);
     }
 
     private void CheckFallDeath()
