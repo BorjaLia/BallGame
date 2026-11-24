@@ -67,7 +67,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 85675809216a1194b91aadcac20ada63, type: 2}
+  - {fileID: 2100000, guid: 91a3e81962286fd4ba15b059c5afd197, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -241,3 +241,4 @@ MonoBehaviour:
   blockingDoorObject: {fileID: 3158565306397311580}
   checkpointPoint: {fileID: 0}
   playerTag: Player
+  checkpointOffset: {x: 0, y: 0, z: 0}
