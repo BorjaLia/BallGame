@@ -15,6 +15,7 @@ MonoBehaviour:
   statId: speed_res
   displayName: Weight
   statType: 1
+  achivementName: 2
   baseValue: 1
   valuePerLevel: -0.2
   maxCap: 4

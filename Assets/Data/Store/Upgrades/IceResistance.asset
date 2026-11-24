@@ -15,6 +15,7 @@ MonoBehaviour:
   statId: ice_res
   displayName: Friction
   statType: 2
+  achivementName: 1
   baseValue: 0
   valuePerLevel: 15
   maxCap: 8

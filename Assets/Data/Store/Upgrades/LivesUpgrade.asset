@@ -15,6 +15,7 @@ MonoBehaviour:
   statId: lives
   displayName: Lives
   statType: 0
+  achivementName: CgkI6-uI0-0UEAIQAQ
   baseValue: 3
   valuePerLevel: 1
   maxCap: 5

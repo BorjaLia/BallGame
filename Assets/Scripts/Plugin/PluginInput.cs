@@ -10,6 +10,11 @@ public class PluginInput : MonoBehaviour
         loader = ServiceLocator.Instance.Get<SceneLoader>();
     }
 
+    private void OnEnable()
+    {
+        ServiceLocator.Instance.Get<LoggerTest>().RefreshLogsUI();
+    }
+
     void Update()
     {
         if (Keyboard.current.escapeKey.wasPressedThisFrame) loader.LoadMainMenu();

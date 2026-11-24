@@ -48,6 +48,10 @@ public class MainMenuManager : MonoBehaviour
     public void GoToPlay() => MenuStateMachine.ChangeState(new PlayState(this));
     public void GoToPlugin() => loader.LoadLevel("Plugin");
 
+    public void ShowAchivements()
+    {
+        GPGSManager.Instance.ShowAchievements();
+    }
     public void LoadLevel(int levelIndex)
     {
         if (levelIndex < 1)

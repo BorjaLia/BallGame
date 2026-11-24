@@ -1,12 +1,28 @@
 using GooglePlayGames;
 using GooglePlayGames.BasicApi;
+using System.Collections.Generic;
 using UnityEngine;
+
 public class GPGSManager : MonoBehaviour
 {
+    public enum AchivementNames
+    {
+        MaxLives,
+        MaxFriction,
+        MaxWeight
+    }
+
     public static GPGSManager Instance { get; private set; }
     public bool IsSignedIn { get; private set; }
+
+    public readonly Dictionary<AchivementNames, string> Achivements = new Dictionary<AchivementNames, string>();
+
     void Awake()
     {
+        Achivements.Add(AchivementNames.MaxFriction,GPGSIds.achievement_max_friction);
+        Achivements.Add(AchivementNames.MaxLives,GPGSIds.achievement_max_lives);
+        Achivements.Add(AchivementNames.MaxWeight,GPGSIds.achievement_max_weight);
+
         if (Instance != null) { Destroy(gameObject); return; }
         Instance = this;
         DontDestroyOnLoad(gameObject);
@@ -25,6 +41,13 @@ PlayGamesPlatform.Instance.Authenticate(ProcessAuthentication);
     public void SignInManually()
     {
         PlayGamesPlatform.Instance.ManuallyAuthenticate(ProcessAuthentication);
+    }
+
+    public void UnlockAchievement(AchivementNames name)
+    {
+        string value;
+        Achivements.TryGetValue(name, out value);
+        UnlockAchievement(value);
     }
 
     public void UnlockAchievement(string id)
