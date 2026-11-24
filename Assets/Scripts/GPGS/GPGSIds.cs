@@ -26,5 +26,8 @@ public static class GPGSIds
 {
         public const string achievement_max_weight = "CgkI6-uI0-0UEAIQAg"; // <GPGSID>
         public const string achievement_max_lives = "CgkI6-uI0-0UEAIQAQ"; // <GPGSID>
+        public const string leaderboard_coins = "CgkI6-uI0-0UEAIQBA"; // <GPGSID>
         public const string achievement_max_friction = "CgkI6-uI0-0UEAIQAw"; // <GPGSID>
+
 }
+

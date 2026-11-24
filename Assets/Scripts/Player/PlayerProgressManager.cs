@@ -70,6 +70,8 @@ public class PlayerProgressManager : MonoBehaviour
         PlayerPrefs.SetInt(CoinsKey, Coins);
         PlayerPrefs.Save();
 
+        GPGSManager.Instance.UnlockAchievement(GPGSIds.leaderboard_coins);
+
         eventBus?.Publish(new CoinsChangedEvent(Coins));
     }
 

@@ -51,6 +51,12 @@ public class MainMenuManager : MonoBehaviour
     {
         GPGSManager.Instance.ShowAchievements();
     }
+
+    public void ShowLeaderboard()
+    {
+        GPGSManager.Instance.ShowAchievements();
+    }
+
     public void LoadLevel(int levelIndex)
     {
         if (levelIndex < 1)
