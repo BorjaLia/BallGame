@@ -6228,7 +6228,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3bbb8e273078c84caf324c2de8fa16e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerProgressManager
-  extraCoins: 10
+  extraCoins: 0
   statUpgrades:
   - {fileID: 11400000, guid: dac35482b73325b4886bfe40b08b711e, type: 2}
   - {fileID: 11400000, guid: 4bdb20f79259d304d85bb1c9f1a02595, type: 2}

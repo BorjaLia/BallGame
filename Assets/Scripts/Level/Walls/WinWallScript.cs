@@ -21,6 +21,7 @@ public class WinWallScript : MonoBehaviour
 
         if (eventBus != null)
         {
+            Debug.Log("[WinWallScript] Publishing win.");
             eventBus.Publish(new OnWin());
         }
         else

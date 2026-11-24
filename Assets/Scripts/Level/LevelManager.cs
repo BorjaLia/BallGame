@@ -34,12 +34,6 @@ public class LevelManager : MonoBehaviour
 
         if (playerHandler != null) currentCheckpoint = playerHandler.transform.position;
 
-        if (eventBus != null)
-        {
-            eventBus.Subscribe<OnRoomExit>(HandleRoomExit);
-            eventBus.Subscribe<OnWin>(HandleLevelWon);
-        }
-
         debugPanel.SetActive(false);
     }
 
@@ -70,8 +64,10 @@ public class LevelManager : MonoBehaviour
 
     private void HandleLevelWon(OnWin e)
     {
+        Debug.Log("Level manager handling win!");
         isLevelEnded = true;
-        SetPlayerActive(false);//trigger ui
+        SetPlayerActive(false);
+        loader.LoadMainMenu();
     }
 
     private void CheckFallDeath()
@@ -141,6 +137,14 @@ public class LevelManager : MonoBehaviour
         if (!playerHandler)
         {
             Debug.LogError("No player reference set");
+        }
+
+        eventBus = ServiceLocator.Instance.Get<EventBus>();
+        
+        if (eventBus != null)
+        {
+            eventBus.Subscribe<OnRoomExit>(HandleRoomExit);
+            eventBus.Subscribe<OnWin>(HandleLevelWon);
         }
     }
 }
