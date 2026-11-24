@@ -18,6 +18,7 @@ public class SpeedTileScript : FloorTile
 
     private void OnPlayerEnter()
     {
-        eventBus?.Publish(new OnSpeedBoost());
+        Debug.Log("Published speedBoost event");
+        eventBus?.Publish(new OnSpeedBoost(boostForce));
     }
 }

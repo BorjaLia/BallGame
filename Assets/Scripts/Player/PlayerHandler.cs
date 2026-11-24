@@ -124,21 +124,17 @@ public class PlayerHandler : MonoBehaviour
     private void ApplyCosmeticColor(Color color)
     {
         if (marbleRenderer != null)
+        {
             marbleRenderer.material.color = color;
+        }
     }
     private void HandleSpeedBoost(OnSpeedBoost e)
     {
-        if (rb == null)
-        {
-            Debug.LogError("No rigidbody found!");
-            return;
-        }
-
-        Vector3 horizontalVel = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
-        Vector3 boostDir = horizontalVel.sqrMagnitude > 0.01f ? horizontalVel.normalized : transform.forward;
-
+        Debug.Log($"Player speed boost recieved {e.BoostForce}");
         float finalBoost = e.BoostForce * stats.speedBoostMultiplier;
-        rb.AddForce(boostDir * finalBoost, ForceMode.VelocityChange);
+
+        Debug.Log($"Player speed boosted by {finalBoost}");
+        movementScript.Move(rb.linearVelocity.normalized * finalBoost);
     }
 
     private void HandleIceEnter(IceTileEnteredEvent e)

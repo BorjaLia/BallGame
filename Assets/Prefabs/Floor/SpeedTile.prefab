@@ -128,7 +128,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SpeedTileScript
   col: {fileID: 2991294727566575029}
   playerTag: Player
-  boostForce: 5
+  boostForce: 100
 --- !u!65 &2991294727566575029
 BoxCollider:
   m_ObjectHideFlags: 0
