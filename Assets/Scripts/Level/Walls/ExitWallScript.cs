@@ -10,8 +10,9 @@ public class ExitWallScript : MonoBehaviour
 
     private bool hasTriggered = false;
     private EventBus eventBus;
-   
-    public Vector3 CheckpointPosition => checkpointPoint != null ? checkpointPoint.position : transform.position;
+
+    [SerializeField] private Vector3 checkpointOffset;
+    public Vector3 CheckpointPosition => (checkpointPoint != null ? checkpointPoint.position : transform.position) + checkpointOffset;
 
     private void Start()
     {

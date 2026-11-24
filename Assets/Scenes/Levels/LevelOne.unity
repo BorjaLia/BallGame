@@ -1216,6 +1216,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: RoomHoles
       objectReference: {fileID: 0}
+    - target: {fileID: 1846403747372817883, guid: a6e2a616218c0e04885b1724418a2230, type: 3}
+      propertyPath: checkpointOffset.z
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1952453503421722137, guid: a6e2a616218c0e04885b1724418a2230, type: 3}
+      propertyPath: checkpointOffset.z
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4653529835681262586, guid: a6e2a616218c0e04885b1724418a2230, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1255,6 +1263,14 @@ PrefabInstance:
     - target: {fileID: 4653529835681262586, guid: a6e2a616218c0e04885b1724418a2230, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7881946547627596114, guid: a6e2a616218c0e04885b1724418a2230, type: 3}
+      propertyPath: checkpointOffset.z
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8432801292424331667, guid: a6e2a616218c0e04885b1724418a2230, type: 3}
+      propertyPath: checkpointOffset.z
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1324,6 +1340,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RoomSpeed
       objectReference: {fileID: 0}
+    - target: {fileID: 325216007823810415, guid: 716954ea4b1ee4d40a5238cce9e39dcd, type: 3}
+      propertyPath: checkpointOffset.z
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3350480493118177741, guid: 716954ea4b1ee4d40a5238cce9e39dcd, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1363,6 +1383,18 @@ PrefabInstance:
     - target: {fileID: 3350480493118177741, guid: 716954ea4b1ee4d40a5238cce9e39dcd, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5106717450079065592, guid: 716954ea4b1ee4d40a5238cce9e39dcd, type: 3}
+      propertyPath: checkpointOffset.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5115058527123732024, guid: 716954ea4b1ee4d40a5238cce9e39dcd, type: 3}
+      propertyPath: checkpointOffset.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7984025727025655996, guid: 716954ea4b1ee4d40a5238cce9e39dcd, type: 3}
+      propertyPath: checkpointOffset.z
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3158,6 +3190,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 761360174}
     m_Modifications:
+    - target: {fileID: 2282131095466007299, guid: b3dc9916428b9b4479543b3ee642bd15, type: 3}
+      propertyPath: checkpointOffset.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2457302151603594215, guid: b3dc9916428b9b4479543b3ee642bd15, type: 3}
+      propertyPath: checkpointOffset.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4170498581768941721, guid: b3dc9916428b9b4479543b3ee642bd15, type: 3}
+      propertyPath: checkpointOffset.z
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5553756970173365169, guid: b3dc9916428b9b4479543b3ee642bd15, type: 3}
       propertyPath: m_Name
       value: RoomIce
@@ -3201,6 +3245,10 @@ PrefabInstance:
     - target: {fileID: 6164871077141045085, guid: b3dc9916428b9b4479543b3ee642bd15, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8463080797609612391, guid: b3dc9916428b9b4479543b3ee642bd15, type: 3}
+      propertyPath: checkpointOffset.z
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
