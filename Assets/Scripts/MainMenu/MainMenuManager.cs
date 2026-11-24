@@ -14,6 +14,7 @@ public class MainMenuManager : MonoBehaviour
     public GameObject creditsPanel;
     public GameObject playPanel;
     public GameObject logsPanel;
+    public GameObject tutorialPanel;
 
     [Header("Loading Screen")]
     public GameObject loadingPanel;
@@ -47,6 +48,7 @@ public class MainMenuManager : MonoBehaviour
     public void GoToCredits() => MenuStateMachine.ChangeState(new CreditsState(this));
     public void GoToPlay() => MenuStateMachine.ChangeState(new PlayState(this));
     public void GoToPlugin() => loader.LoadLevel("Plugin");
+    public void GoToTutorial() => MenuStateMachine.ChangeState(new TutorialState(this));
 
     public void ShowAchivements()
     {
