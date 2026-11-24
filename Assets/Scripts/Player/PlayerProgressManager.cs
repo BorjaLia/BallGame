@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Xml.Serialization;
 using UnityEngine;
 
 public class PlayerProgressManager : MonoBehaviour
@@ -112,6 +113,13 @@ public class PlayerProgressManager : MonoBehaviour
         PlayerPrefs.SetInt(GetStatUnlockedKey(data.statId), nextLevel);
         PlayerPrefs.SetInt(GetStatSelectedKey(data.statId), nextLevel);
         PlayerPrefs.Save();
+
+        currentUnlocked = GetUnlockedStatLevel(data);
+        if (currentUnlocked >= data.maxCap)
+        {
+            Debug.Log("Maxed out the stat and tried to get achivement!");
+            GPGSManager.Instance.UnlockAchievement(data.achivementName);
+        }
 
         eventBus?.Publish(new StatChangedEvent(data, nextLevel, nextLevel));
         return true;

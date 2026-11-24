@@ -11,6 +11,7 @@ public class StatUpgradeRowUI : MonoBehaviour
     [SerializeField] private Button increaseButton;
     [SerializeField] private Button buyButton;
     [SerializeField] private TMP_Text buyButtonText;
+    [SerializeField] private string achivementString;
 
     private StatUpgradeData statData;
     private PlayerProgressManager progressManager;
@@ -63,6 +64,7 @@ public class StatUpgradeRowUI : MonoBehaviour
         {
             buyButton.interactable = false;
             if (buyButtonText != null) buyButtonText.text = "-";
+            GPGSManager.Instance.UnlockAchievement(achivementString);
         }
         else
         {

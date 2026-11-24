@@ -14,6 +14,7 @@ public class StatUpgradeData : ScriptableObject
     public string statId;
     public string displayName;
     public StatType statType;
+    public string achivementName;
 
     [Header("Progression")]
     public float baseValue = 0f;
