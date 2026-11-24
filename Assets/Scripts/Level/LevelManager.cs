@@ -101,6 +101,7 @@ public class LevelManager : MonoBehaviour
             isLevelEnded = true;
             SetPlayerActive(false);
             eventBus?.Publish(new OnLoss());
+            loader.LoadScene(SceneLoader.SceneNames.MainMenu);
         }
     }
 

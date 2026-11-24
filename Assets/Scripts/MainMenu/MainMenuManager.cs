@@ -59,7 +59,7 @@ public class MainMenuManager : MonoBehaviour
 
     public void LoadLevel(int levelIndex)
     {
-        if (levelIndex < 1)
+        if (levelIndex < 0)
         {
             Debug.LogError("Cant load negative levels!");
             return;
@@ -73,6 +73,6 @@ public class MainMenuManager : MonoBehaviour
 
         MenuStateMachine.ChangeState(new LoadingState(this));
 
-        loader.LoadScene((SceneLoader.SceneNames)(levelIndex-1));
+        loader.LoadScene((SceneLoader.SceneNames)(levelIndex));
     }
 }
