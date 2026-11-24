@@ -4,6 +4,8 @@ using UnityEngine.InputSystem;
 
 public class LevelManager : MonoBehaviour
 {
+    [SerializeField] private GameObject debugPanel;
+
     [SerializeField] private PlayerHandler playerHandler;
     [SerializeField] private float fallDeathY = -5f;
     [SerializeField] private float respawnDelay = 0.5f;
@@ -14,6 +16,7 @@ public class LevelManager : MonoBehaviour
     private Vector3 currentCheckpoint;
     private bool isHandlingDeath = false;
     private bool isLevelEnded = false;
+
 
     private void OnEnable()
     {
@@ -36,6 +39,8 @@ public class LevelManager : MonoBehaviour
             eventBus.Subscribe<OnRoomExit>(HandleRoomExit);
             eventBus.Subscribe<OnWin>(HandleLevelWon);
         }
+
+        debugPanel.SetActive(false);
     }
 
     private void Update()
@@ -51,6 +56,11 @@ public class LevelManager : MonoBehaviour
             eventBus.Unsubscribe<OnRoomExit>(HandleRoomExit);
             eventBus.Unsubscribe<OnWin>(HandleLevelWon);
         }
+    }
+
+    public void ToggleDevMode()
+    {
+        debugPanel.SetActive(!debugPanel.activeSelf);
     }
 
     private void HandleRoomExit(OnRoomExit e)
