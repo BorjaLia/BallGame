@@ -5,10 +5,8 @@ using UnityEngine.UI;
 public class CosmeticColorSlotUI : MonoBehaviour
 {
     [Header("UI References")]
-    [SerializeField] private Image colorSwatchImage;
-    [SerializeField] private GameObject lockedOverlay;
+    [SerializeField] private TMP_Text nameText;
     [SerializeField] private TMP_Text priceText;
-    [SerializeField] private GameObject selectedOutline;
     [SerializeField] private Button slotButton;
 
     private CosmeticColorData colorData;
@@ -19,9 +17,9 @@ public class CosmeticColorSlotUI : MonoBehaviour
         colorData = data;
         progressManager = manager;
 
-        if (colorSwatchImage != null)
+        if (nameText != null)
         {
-            colorSwatchImage.color = data.color;
+            nameText.text = data.displayName;
         }
 
         slotButton.onClick.RemoveAllListeners();
@@ -36,23 +34,9 @@ public class CosmeticColorSlotUI : MonoBehaviour
 
         bool isUnlocked = progressManager.IsColorUnlocked(colorData);
         CosmeticColorData currentSelected = progressManager.GetSelectedColorData();
-        bool isSelected = currentSelected != null && currentSelected.colorId == colorData.colorId;
+        bool isEquipped = currentSelected != null && currentSelected.colorId == colorData.colorId;
 
-        if (lockedOverlay != null)
-        {
-            lockedOverlay.SetActive(!isUnlocked);
-        }
-
-        if (selectedOutline != null)
-        {
-            selectedOutline.SetActive(isUnlocked && isSelected);
-        }
-
-        if (isUnlocked)
-        {
-            slotButton.interactable = true;
-        }
-        else
+        if (!isUnlocked)
         {
             if (priceText != null)
             {
@@ -61,17 +45,41 @@ public class CosmeticColorSlotUI : MonoBehaviour
 
             slotButton.interactable = progressManager.Coins >= colorData.cost;
         }
+        else if (isEquipped)
+        {
+            if (priceText != null)
+            {
+                priceText.text = "Equipped";
+            }
+
+            slotButton.interactable = false;
+        }
+        else
+        {
+            if (priceText != null)
+            {
+                priceText.text = "Equip";
+            }
+
+            slotButton.interactable = true;
+        }
     }
 
     private void OnSlotClicked()
     {
-        if (progressManager.IsColorUnlocked(colorData))
-        {
-            progressManager.SelectColor(colorData);
-        }
-        else
+        if (colorData == null || progressManager == null) return;
+
+        if (!progressManager.IsColorUnlocked(colorData))
         {
             progressManager.TryUnlockColor(colorData);
+            return;
         }
+
+        CosmeticColorData currentSelected = progressManager.GetSelectedColorData();
+        bool isEquipped = currentSelected != null && currentSelected.colorId == colorData.colorId;
+
+        if (isEquipped) return;
+
+        progressManager.SelectColor(colorData);
     }
 }

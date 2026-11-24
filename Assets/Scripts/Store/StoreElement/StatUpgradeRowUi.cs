@@ -62,7 +62,7 @@ public class StatUpgradeRowUI : MonoBehaviour
         if (isMaxed)
         {
             buyButton.interactable = false;
-            if (buyButtonText != null) buyButtonText.text = "MAX";
+            if (buyButtonText != null) buyButtonText.text = "-";
         }
         else
         {
