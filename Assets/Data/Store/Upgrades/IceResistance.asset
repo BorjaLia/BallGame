@@ -16,7 +16,7 @@ MonoBehaviour:
   displayName: Friction
   statType: 2
   baseValue: 0
-  valuePerLevel: 0.15
+  valuePerLevel: 15
   maxCap: 8
   baseCost: 1
   costPerLevel: 2

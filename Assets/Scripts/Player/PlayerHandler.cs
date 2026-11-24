@@ -141,7 +141,7 @@ public class PlayerHandler : MonoBehaviour
     {
         iceTileCount++;
 
-        float effectiveControlMult = Mathf.Lerp(e.ControlMultiplier, defaultForceMult, stats.iceGrip);
+        float effectiveControlMult = e.ControlMultiplier + stats.iceGrip;
 
         movementScript.forceMult = effectiveControlMult;
         Debug.Log($"Ice entered: event at {e.ControlMultiplier}");
