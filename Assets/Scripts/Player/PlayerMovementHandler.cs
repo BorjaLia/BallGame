@@ -15,6 +15,7 @@ public class PlayerMovementHandler : MonoBehaviour
 
     [SerializeField] private float speedDebug;
     [SerializeField] private Vector3 dir;
+    [SerializeField] private float extraGravity;
     [SerializeField] public float forceMult = 1.0f;
     [SerializeField] public float verticalLimit = 1.0f;
 
@@ -56,7 +57,7 @@ public class PlayerMovementHandler : MonoBehaviour
 
     private void FixedUpdate()
     {
-        dir = new Vector3(inputHandler.MoveInput.x, 0.0f, inputHandler.MoveInput.y);
+        dir = new Vector3(inputHandler.MoveInput.x, -extraGravity, inputHandler.MoveInput.y);
 
         Move(dir);
 
