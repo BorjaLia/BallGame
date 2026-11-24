@@ -8,26 +8,18 @@ public class CoinScript : InteractableObject
 
     private void OnEnable()
     {
-        onPlayerCollisionAction += OnPickup;
-        onPlayerCollisionEvent = new OnCoinCollected(value);
+        onPlayerEnterAction += OnPickup;
     }
 
     private void OnDisable()
     {
-        onPlayerCollisionAction -= OnPickup;
+        onPlayerEnterAction -= OnPickup;
     }
 
     private void OnPickup()
     {
-        if (col != null) col.enabled = false;
-
-        Debug.Log($"Coin picked up (+{value})!");
+        Debug.Log("Published coin collected event");
+        eventBus?.Publish(new OnCoinCollected(value));
         Destroy(gameObject, 0.0f);
-    }
-
-    public void SetValue(int newValue)
-    {
-        value = newValue;
-        onPlayerCollisionEvent = new OnCoinCollected(value);
     }
 }

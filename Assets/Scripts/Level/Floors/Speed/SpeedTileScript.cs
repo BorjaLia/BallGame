@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class SpeedTileScript : FloorTile
+public class SpeedTileScript : InteractableObject
 {
     [SerializeField] private float boostForce = 10f;
 

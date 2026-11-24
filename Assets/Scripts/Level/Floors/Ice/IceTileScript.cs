@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class IceTileScript : FloorTile
+public class IceTileScript : InteractableObject
 {
     [SerializeField, Range(0f, 100f)] private float controlMultiplier = 35.0f;
 

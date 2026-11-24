@@ -7,12 +7,12 @@ public abstract class InteractableObject : MonoBehaviour
     [SerializeField] protected Collider col;
     [SerializeField] protected string playerTag;
 
-    private EventBus eventBus;
+    protected EventBus eventBus;
 
-    protected Action onPlayerCollisionAction = null;
-    protected IEvent onPlayerCollisionEvent = null;
+    protected Action onPlayerEnterAction = null;
+    protected Action onPlayerExitAction = null;
 
-    void Awake()
+    protected virtual void Awake()
     {
         eventBus = ServiceLocator.Instance.Get<EventBus>();
 
@@ -22,7 +22,7 @@ public abstract class InteractableObject : MonoBehaviour
         }
     }
 
-    void Start()
+    protected virtual void Start()
     {
         FindScriptReferences();
     }
@@ -39,12 +39,29 @@ public abstract class InteractableObject : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(UnityEngine.Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag(playerTag))
         {
-            if(onPlayerCollisionAction != null) onPlayerCollisionAction?.Invoke();
-            if (onPlayerCollisionEvent != null) eventBus.Publish(onPlayerCollisionEvent);
+            onPlayerEnterAction?.Invoke();
+            Debug.Log("Player entered special tile!");
+        }
+        else
+        {
+            Debug.Log("Something entered special tile!");
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag(playerTag))
+        {
+            onPlayerExitAction?.Invoke();
+            Debug.Log("Player exited special tile!");
+        }
+        else
+        {
+            Debug.Log("Something exited special tile!");
         }
     }
 }
