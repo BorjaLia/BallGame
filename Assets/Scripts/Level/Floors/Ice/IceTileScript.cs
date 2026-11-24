@@ -6,9 +6,8 @@ public class IceTileScript : FloorTile
 
     [SerializeField, Range(0f, 1f)] private float controlMultiplier = 0.35f;
 
-    protected override void Start()
+    private void OnEnable()
     {
-        base.Start();
         onPlayerEnterEvent = new IceTileEnteredEvent(dampingMultiplier, controlMultiplier);
         onPlayerExitEvent = new IceTileExitedEvent();
     }

@@ -70,11 +70,16 @@ public class PlayerHandler : MonoBehaviour
         }
 
         eventBus = ServiceLocator.Instance.Get<EventBus>();
+
         if (eventBus != null)
         {
             eventBus.Subscribe<SpeedBoostTriggeredEvent>(HandleSpeedBoost);
             eventBus.Subscribe<IceTileEnteredEvent>(HandleIceEnter);
             eventBus.Subscribe<IceTileExitedEvent>(HandleIceExit);
+        }
+        else
+        {
+            Debug.LogError("No event bus has been fetched!");
         }
     }
 
@@ -117,8 +122,7 @@ public class PlayerHandler : MonoBehaviour
         iceTileCount = 0;
         currentControlMultiplier = 1f;
 
-        if (rb != null)
-            rb.linearDamping = defaultLinearDamping;
+        if (rb != null) rb.linearDamping = defaultLinearDamping;
     }
 
     private void ApplyCosmeticColor(Color color)

@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class FloorTile : MonoBehaviour
 {
     [SerializeField] protected Collider col;
-    [SerializeField] protected string playerTag = "Player";
+    [SerializeField] protected string playerTag;
 
     protected EventBus eventBus;
 
@@ -49,6 +49,7 @@ public abstract class FloorTile : MonoBehaviour
             if (onPlayerEnterEvent != null) eventBus.Publish(onPlayerEnterEvent);
             Debug.Log("Player entered special tile!");
         }
+        Debug.Log("Something entered special tile!");
     }
 
     private void OnTriggerExit(Collider other)
@@ -59,5 +60,6 @@ public abstract class FloorTile : MonoBehaviour
             if (onPlayerExitEvent != null) eventBus.Publish(onPlayerExitEvent);
             Debug.Log("Player exited special tile!");
         }
+        Debug.Log("Something exited special tile!");
     }
 }
